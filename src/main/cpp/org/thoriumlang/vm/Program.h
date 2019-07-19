@@ -14,22 +14,21 @@
  * limitations under the License.
  */
 
-#ifndef THVM_VM_H
-#define THVM_VM_H
+#ifndef THVM_PROGRAM_H
+#define THVM_PROGRAM_H
 
-#include "Stack.h"
-#include "Program.h"
+
+#include <cstdint>
 
 namespace org::thoriumlang::vm {
-    class Vm {
-        Program program;
-        Stack data;
-
+    class Program {
+        uint8_t *code;
+        uint8_t *ip; // instruction pointer
     public:
-        Vm(int dataStackSize, Program program);
+        Program(uint8_t *code);
 
-        void run();
+        uint8_t next();
     };
 }
 
-#endif //THVM_VM_H
+#endif //THVM_PROGRAM_H

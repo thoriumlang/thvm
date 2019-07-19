@@ -20,20 +20,21 @@
 #define OP_HALT 0
 using namespace org::thoriumlang::vm;
 
-uint8_t *op_nop(uint8_t *ip, Stack *stack) {
-    return ip + 1;
+Vm::Vm(int stackSize, Program program) : data(stackSize), program(program) {}
+
+void op_nop(Program *program, Stack *stack) {
+    // nothing
 }
 
-uint8_t *op_push(uint8_t *ip, Stack *stack) {
+void op_push(Program *program, Stack *stack) {
     OBJECT o;
     o.type = 'I';
-    o.u8 = *(ip + 1);
-    stack->push(o);
+    o.u8 = program->next();
 
-    return ip + 2;
+    stack->push(o);
 }
 
-uint8_t *op_add(uint8_t *ip, Stack *stack) {
+void op_add(Program *program, Stack *stack) {
     const OBJECT &o1 = stack->pop();
     const OBJECT &o2 = stack->pop();
 
@@ -42,11 +43,9 @@ uint8_t *op_add(uint8_t *ip, Stack *stack) {
     o.u8 = o1.u8 + o2.u8;
 
     stack->push(o);
-
-    return ip + 1;
 }
 
-uint8_t *op_dump(uint8_t *ip, Stack *stack) {
+void op_dump(Program *program, Stack *stack) {
     const OBJECT &o = stack->pop();
 
     std::cout << "Head of stack: "
@@ -55,12 +54,10 @@ uint8_t *op_dump(uint8_t *ip, Stack *stack) {
               << o.type
               << ")"
               << std::endl;
-
-    return ip + 1;
 }
 
 void Vm::run() {
-    typedef uint8_t *(*instruction)(uint8_t *ip, Stack *stack);
+    typedef void (*instruction)(Program *program, Stack *stack);
 
     instruction ops[256];
     for (int i = 0; i < 256; i++) {
@@ -70,11 +67,10 @@ void Vm::run() {
     ops[2] = op_add;
     ops[3] = op_dump;
 
-    while (*ip != OP_HALT) {
-        this->ip = ops[*ip](ip, &this->data);
+    uint8_t op;
+    while ((op = program.next()) != OP_HALT) {
+        ops[op](&program, &data);
     }
 
     std::cout << "End" << std::endl;
 }
-
-Vm::Vm(int stackSize, uint8_t *code) : data(stackSize), code(code), ip(code) {}

@@ -20,8 +20,10 @@
 using namespace org::thoriumlang::vm;
 
 int main(int argc, char *argv[]) {
-    Vm vm = Vm(1024, (uint8_t[]) {1, 1, 1, 1, 2, 3, 0});
-    vm.run();
+    Vm(
+            1024,
+            Program((uint8_t[]) {1, 1, 1, 1, 2, 3, 0})
+    ).run();
     return 0;
 }
 

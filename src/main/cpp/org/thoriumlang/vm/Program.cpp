@@ -14,22 +14,15 @@
  * limitations under the License.
  */
 
-#ifndef THVM_VM_H
-#define THVM_VM_H
-
-#include "Stack.h"
 #include "Program.h"
 
-namespace org::thoriumlang::vm {
-    class Vm {
-        Program program;
-        Stack data;
+using namespace org::thoriumlang::vm;
 
-    public:
-        Vm(int dataStackSize, Program program);
-
-        void run();
-    };
+Program::Program(uint8_t *code) :
+        code(code), ip(code) {
+    // nothing
 }
 
-#endif //THVM_VM_H
+uint8_t Program::next() {
+    return (*ip++);
+}
