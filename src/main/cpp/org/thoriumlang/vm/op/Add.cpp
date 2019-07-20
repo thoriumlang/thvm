@@ -26,7 +26,7 @@ void Add::eval(Program *program, Stack *stack) {
 
     OBJECT o;
     o.type = 'I';
-    o.u8 = o1.u8 + o2.u8;
+    o.i64 = o1.i64 + o2.i64;
 
     stack->push(o);
 }

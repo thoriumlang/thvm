@@ -28,6 +28,8 @@ namespace org::thoriumlang::vm {
         Program(uint8_t *code);
 
         uint8_t next();
+
+        int nextInt();
     };
 }
 

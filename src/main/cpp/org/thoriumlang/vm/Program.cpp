@@ -24,5 +24,18 @@ Program::Program(uint8_t *code) :
 }
 
 uint8_t Program::next() {
-    return (*ip++);
+    uint8_t op = *ip;
+    ip++;
+    return op;
+}
+
+int Program::nextInt() {
+    int64_t int64 = 0;
+
+    for (int i = 0; i < 8; i++) {
+        int64 = int64 << 8;
+        int64 += (int64_t) next();
+    }
+
+    return int64;
 }

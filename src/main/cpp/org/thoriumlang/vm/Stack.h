@@ -23,7 +23,7 @@ namespace org::thoriumlang::vm {
     typedef struct OBJECT_t {
         uint8_t type;
         union {
-            uint8_t u8;
+            int64_t i64 ;
         };
     } OBJECT;
 

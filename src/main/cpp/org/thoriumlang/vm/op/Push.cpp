@@ -23,6 +23,6 @@ Push Push::instance;
 void Push::eval(Program *program, Stack *stack) {
     OBJECT o;
     o.type = 'I';
-    o.u8 = program->next();
+    o.i64 = program->nextInt();
     stack->push(o);
 }

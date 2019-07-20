@@ -24,9 +24,9 @@ int main(int argc, char *argv[]) {
             1024,
             Program((uint8_t[]) {
                     OP_PUSH,
-                    1,
+                    0,0,0,0,0,0,0x07,0xE3,
                     OP_PUSH,
-                    1,
+                    0,0,0,0,0,0,0,1,
                     OP_ADD,
                     OP_DUMP,
                     OP_HALT

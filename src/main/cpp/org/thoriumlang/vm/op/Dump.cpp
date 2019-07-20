@@ -25,7 +25,7 @@ void Dump::eval(Program *program, Stack *stack) {
     const OBJECT &o = stack->peek();
 
     std::cout << "Top of stack: "
-              << (int) o.u8
+              << o.i64
               << " ("
               << o.type
               << ")"
