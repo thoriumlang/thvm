@@ -34,7 +34,7 @@ OBJECT Stack::peek() {
 
 Stack::Stack(int size) :
         size(size),
-        sp(0),
+        sp(-1),
         stack((OBJECT *) malloc(sizeof(OBJECT) * size)) {
     std::cout << "Stack size is "
               << size
