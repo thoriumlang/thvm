@@ -14,25 +14,12 @@
  * limitations under the License.
  */
 
-#include <iostream>
-#include "org/thoriumlang/vm/Vm.h"
+#include "Pop.h"
 
-using namespace org::thoriumlang::vm;
+using namespace org::thoriumlang::vm::op;
 
-int main(int argc, char *argv[]) {
-    Vm(
-            1024,
-            Program((uint8_t[]) {
-                    OP_PUSH,
-                    0,0,0,0,0,0,0x07,0xE3, // 2019
-                    OP_PUSH,
-                    0,0,0,0,0,0,0,1,       // 1
-                    OP_ADD,
-                    OP_DUMP,
-                    OP_POP,
-                    OP_HALT
-            })
-    ).run();
-    return 0;
+Pop Pop::instance;
+
+void Pop::execute(Program *program, Stack *stack) {
+    stack->pop();
 }
-

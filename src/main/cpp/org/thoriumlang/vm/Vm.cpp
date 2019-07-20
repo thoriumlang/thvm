@@ -21,6 +21,7 @@
 #include "op/Push.h"
 #include "op/Add.h"
 #include "op/Dump.h"
+#include "op/Pop.h"
 
 using namespace org::thoriumlang::vm;
 using namespace org::thoriumlang::vm::op;
@@ -32,6 +33,7 @@ Vm::Vm(int stackSize, Program program) : data(stackSize), program(program) {
     ops[OP_PUSH] = Push::get();
     ops[OP_ADD] = Add::get();
     ops[OP_DUMP] = Dump::get();
+    ops[OP_POP] = Pop::get();
 }
 
 void Vm::run() {

@@ -14,25 +14,22 @@
  * limitations under the License.
  */
 
-#include <iostream>
-#include "org/thoriumlang/vm/Vm.h"
+#ifndef THVM_POP_H
+#define THVM_POP_H
 
-using namespace org::thoriumlang::vm;
+#include "Op.h"
 
-int main(int argc, char *argv[]) {
-    Vm(
-            1024,
-            Program((uint8_t[]) {
-                    OP_PUSH,
-                    0,0,0,0,0,0,0x07,0xE3, // 2019
-                    OP_PUSH,
-                    0,0,0,0,0,0,0,1,       // 1
-                    OP_ADD,
-                    OP_DUMP,
-                    OP_POP,
-                    OP_HALT
-            })
-    ).run();
-    return 0;
+namespace org::thoriumlang::vm::op {
+    class Pop : public Op {
+        static Pop instance;
+
+    public:
+        void execute(Program *program, Stack *stack) override;
+
+        static Pop *get() noexcept {
+            return &instance;
+        }
+    };
 }
 
+#endif //THVM_POP_H

@@ -26,6 +26,7 @@
 #define OP_PUSH 1
 #define OP_ADD 2
 #define OP_DUMP 3
+#define OP_POP 4
 
 namespace org::thoriumlang::vm {
     class Vm {
