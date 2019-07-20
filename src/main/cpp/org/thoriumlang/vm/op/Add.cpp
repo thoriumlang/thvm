@@ -14,30 +14,19 @@
  * limitations under the License.
  */
 
-#ifndef THVM_VM_H
-#define THVM_VM_H
+#include "Add.h"
 
-#include "Stack.h"
-#include "Program.h"
-#include "op/Op.h"
+using namespace org::thoriumlang::vm::op;
 
-#define OP_HALT 0
-#define NOP 0
-#define OP_PUSH 1
-#define OP_ADD 2
-#define OP_DUMP 3
+Add Add::instance;
 
-namespace org::thoriumlang::vm {
-    class Vm {
-        Program program;
-        Stack data;
-        op::Op *ops[256]{};
+void Add::eval(Program *program, Stack *stack) {
+    const OBJECT &o1 = stack->pop();
+    const OBJECT &o2 = stack->pop();
 
-    public:
-        Vm(int dataStackSize, Program program);
+    OBJECT o;
+    o.type = 'I';
+    o.u8 = o1.u8 + o2.u8;
 
-        void run();
-    };
+    stack->push(o);
 }
-
-#endif //THVM_VM_H

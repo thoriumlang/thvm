@@ -14,30 +14,18 @@
  * limitations under the License.
  */
 
-#ifndef THVM_VM_H
-#define THVM_VM_H
+#ifndef THVM_OP_H
+#define THVM_OP_H
 
-#include "Stack.h"
-#include "Program.h"
-#include "op/Op.h"
 
-#define OP_HALT 0
-#define NOP 0
-#define OP_PUSH 1
-#define OP_ADD 2
-#define OP_DUMP 3
+#include "../Program.h"
+#include "../Stack.h"
 
-namespace org::thoriumlang::vm {
-    class Vm {
-        Program program;
-        Stack data;
-        op::Op *ops[256]{};
-
+namespace org::thoriumlang::vm::op {
+    class Op {
     public:
-        Vm(int dataStackSize, Program program);
-
-        void run();
+        virtual void eval(Program *program, Stack *stack) = 0;
     };
 }
 
-#endif //THVM_VM_H
+#endif //THVM_OP_H

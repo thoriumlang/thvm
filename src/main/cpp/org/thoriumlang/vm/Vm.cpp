@@ -16,60 +16,28 @@
 
 #include <iostream>
 #include "Vm.h"
+#include "op/Op.h"
+#include "op/Nop.h"
+#include "op/Push.h"
+#include "op/Add.h"
+#include "op/Dump.h"
 
-#define OP_HALT 0
 using namespace org::thoriumlang::vm;
+using namespace org::thoriumlang::vm::op;
 
-Vm::Vm(int stackSize, Program program) : data(stackSize), program(program) {}
-
-void op_nop(Program *program, Stack *stack) {
-    // nothing
-}
-
-void op_push(Program *program, Stack *stack) {
-    OBJECT o;
-    o.type = 'I';
-    o.u8 = program->next();
-
-    stack->push(o);
-}
-
-void op_add(Program *program, Stack *stack) {
-    const OBJECT &o1 = stack->pop();
-    const OBJECT &o2 = stack->pop();
-
-    OBJECT o;
-    o.type = 'I';
-    o.u8 = o1.u8 + o2.u8;
-
-    stack->push(o);
-}
-
-void op_dump(Program *program, Stack *stack) {
-    const OBJECT &o = stack->pop();
-
-    std::cout << "Head of stack: "
-              << (int) o.u8
-              << " ("
-              << o.type
-              << ")"
-              << std::endl;
+Vm::Vm(int stackSize, Program program) : data(stackSize), program(program) {
+    for (Op *&op : ops) {
+        op = Nop::get();
+    }
+    ops[OP_PUSH] = Push::get();
+    ops[OP_ADD] = Add::get();
+    ops[OP_DUMP] = Dump::get();
 }
 
 void Vm::run() {
-    typedef void (*instruction)(Program *program, Stack *stack);
-
-    instruction ops[256];
-    for (int i = 0; i < 256; i++) {
-        ops[i] = op_nop;
-    }
-    ops[1] = op_push;
-    ops[2] = op_add;
-    ops[3] = op_dump;
-
     uint8_t op;
     while ((op = program.next()) != OP_HALT) {
-        ops[op](&program, &data);
+        ops[op]->eval(&program, &data);
     }
 
     std::cout << "End" << std::endl;

@@ -14,30 +14,22 @@
  * limitations under the License.
  */
 
-#ifndef THVM_VM_H
-#define THVM_VM_H
+#ifndef THVM_DUMP_H
+#define THVM_DUMP_H
 
-#include "Stack.h"
-#include "Program.h"
-#include "op/Op.h"
+#include "Op.h"
 
-#define OP_HALT 0
-#define NOP 0
-#define OP_PUSH 1
-#define OP_ADD 2
-#define OP_DUMP 3
-
-namespace org::thoriumlang::vm {
-    class Vm {
-        Program program;
-        Stack data;
-        op::Op *ops[256]{};
+namespace org::thoriumlang::vm::op {
+    class Dump : public Op {
+        static Dump instance;
 
     public:
-        Vm(int dataStackSize, Program program);
+        void eval(Program *program, Stack *stack) override;
 
-        void run();
+        static Dump *get() noexcept {
+            return &instance;
+        }
     };
 }
 
-#endif //THVM_VM_H
+#endif //THVM_DUMP_H

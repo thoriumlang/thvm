@@ -22,7 +22,15 @@ using namespace org::thoriumlang::vm;
 int main(int argc, char *argv[]) {
     Vm(
             1024,
-            Program((uint8_t[]) {1, 1, 1, 1, 2, 3, 0})
+            Program((uint8_t[]) {
+                    OP_PUSH,
+                    1,
+                    OP_PUSH,
+                    1,
+                    OP_ADD,
+                    OP_DUMP,
+                    OP_HALT
+            })
     ).run();
     return 0;
 }
