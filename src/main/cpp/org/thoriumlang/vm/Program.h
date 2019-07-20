@@ -27,7 +27,7 @@ namespace org::thoriumlang::vm {
     public:
         Program(uint8_t *code);
 
-        uint8_t next();
+        uint8_t fetch();
 
         int nextInt();
     };

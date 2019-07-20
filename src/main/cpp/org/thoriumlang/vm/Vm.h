@@ -33,6 +33,8 @@ namespace org::thoriumlang::vm {
         Stack data;
         op::Op *ops[256]{};
 
+        op::Op *decode(uint8_t opCode);
+
     public:
         Vm(int dataStackSize, Program program);
 

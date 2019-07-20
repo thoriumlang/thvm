@@ -20,7 +20,7 @@ using namespace org::thoriumlang::vm::op;
 
 Push Push::instance;
 
-void Push::eval(Program *program, Stack *stack) {
+void Push::execute(Program *program, Stack *stack) {
     OBJECT o;
     o.type = 'I';
     o.i64 = program->nextInt();

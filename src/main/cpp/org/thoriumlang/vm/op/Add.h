@@ -24,7 +24,7 @@ namespace org::thoriumlang::vm::op {
         static Add instance;
 
     public:
-        void eval(Program *program, Stack *stack) override;
+        void execute(Program *program, Stack *stack) override;
 
         static Add *get() noexcept {
             return &instance;

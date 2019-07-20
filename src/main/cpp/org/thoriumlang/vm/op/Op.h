@@ -24,7 +24,7 @@
 namespace org::thoriumlang::vm::op {
     class Op {
     public:
-        virtual void eval(Program *program, Stack *stack) = 0;
+        virtual void execute(Program *program, Stack *stack) = 0;
     };
 }
 

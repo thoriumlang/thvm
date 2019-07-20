@@ -20,6 +20,6 @@ using namespace org::thoriumlang::vm::op;
 
 Nop Nop::instance;
 
-void Nop::eval(Program *program, Stack *stack) {
-
+void Nop::execute(Program *program, Stack *stack) {
+    // nothing
 }

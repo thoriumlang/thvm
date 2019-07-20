@@ -36,9 +36,13 @@ Vm::Vm(int stackSize, Program program) : data(stackSize), program(program) {
 
 void Vm::run() {
     uint8_t op;
-    while ((op = program.next()) != OP_HALT) {
-        ops[op]->eval(&program, &data);
+    while ((op = program.fetch()) != OP_HALT) {
+        decode(op)->execute(&program, &data);
     }
 
     std::cout << "End" << std::endl;
+}
+
+op::Op *Vm::decode(uint8_t opCode) {
+    return ops[opCode];
 }

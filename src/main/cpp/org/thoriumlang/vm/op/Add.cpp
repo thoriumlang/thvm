@@ -20,9 +20,9 @@ using namespace org::thoriumlang::vm::op;
 
 Add Add::instance;
 
-void Add::eval(Program *program, Stack *stack) {
-    const OBJECT &o1 = stack->pop();
+void Add::execute(Program *program, Stack *stack) {
     const OBJECT &o2 = stack->pop();
+    const OBJECT &o1 = stack->pop();
 
     OBJECT o;
     o.type = 'I';
