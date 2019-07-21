@@ -1,0 +1,37 @@
+language: cpp
+
+git:
+  depth: false
+
+compiler:
+  - gcc
+  - clang
+
+cache:
+  directories:
+    - ${TRAVIS_BUILD_DIR}/deps
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+      - llvm-toolchain-precise-3.8
+    packages:
+      - g++-6
+      - clang-3.8
+
+install:
+  - if [ ! -d ${TRAVIS_BUILD_DIR}/deps/cmake-3.14.0-Linux-x86_64 ]; then cd ${TRAVIS_BUILD_DIR}/deps; fi
+  - if [ ! -d ${TRAVIS_BUILD_DIR}/deps/cmake-3.14.0-Linux-x86_64 ]; then travis_retry wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.14.0/cmake-3.14.0-Linux-x86_64.tar.gz; fi
+  - if [ ! -d ${TRAVIS_BUILD_DIR}/deps/cmake-3.14.0-Linux-x86_64 ]; then tar -xf cmake-3.14.0-Linux-x86_64.tar.gz; fi
+  - PATH=${TRAVIS_BUILD_DIR}/deps/cmake-3.14.0-Linux-x86_64/bin:$PATH
+  - cd ${TRAVIS_BUILD_DIR}
+  - "[ $CXX = g++ ] && export CXX=g++-6 || true"
+  - "[ $CXX = clang++ ] && export CXX=clang++-3.8 || true"
+
+script:
+  - mkdir -p build
+  - cd build
+  - cmake ..
+  - make
+  - make test

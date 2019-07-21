@@ -20,18 +20,20 @@
 using namespace org::thoriumlang::vm;
 
 int main(int argc, char *argv[]) {
+    static const uint8_t program[] = {
+            OP_PUSH,
+            0, 0, 0, 0, 0, 0, 0x07, 0xE3, // 2019
+            OP_PUSH,
+            0, 0, 0, 0, 0, 0, 0, 1,       // 1
+            OP_ADD,
+            OP_DUMP,
+            OP_POP,
+            OP_HALT
+    };
+
     Vm(
             1024,
-            Program((uint8_t[]) {
-                    OP_PUSH,
-                    0,0,0,0,0,0,0x07,0xE3, // 2019
-                    OP_PUSH,
-                    0,0,0,0,0,0,0,1,       // 1
-                    OP_ADD,
-                    OP_DUMP,
-                    OP_POP,
-                    OP_HALT
-            })
+            Program((uint8_t *) &program[0])
     ).run();
     return 0;
 }
