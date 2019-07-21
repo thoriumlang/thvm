@@ -14,17 +14,8 @@
  * limitations under the License.
  */
 
-#ifndef THVM_OP_H
-#define THVM_OP_H
+#include <gtest/gtest.h>
 
-#include "../Program.h"
-#include "../Stack.h"
-
-namespace org::thoriumlang::vm::op {
-    class Op {
-    public:
-        virtual void execute(Program *program, Stack *stack) = 0;
-    };
+TEST(StackTest, nothing) {
+    ASSERT_TRUE(true);
 }
-
-#endif //THVM_OP_H
