@@ -16,6 +16,8 @@
 
 #include <gtest/gtest.h>
 #include "../../../../../main/cpp/org/thoriumlang/vm/Stack.h"
+#include "../../../../../main/cpp/org/thoriumlang/vm/StackOverflow.h"
+#include "../../../../../main/cpp/org/thoriumlang/vm/StackUnderflow.h"
 
 using namespace org::thoriumlang::vm;
 
@@ -32,6 +34,18 @@ TEST(StackTest, pushAndPop) {
     stack.push(object(1));
 
     ASSERT_EQ(stack.pop().i64, 1);
+}
+
+TEST(StackTest, popPastStackThrowsException) {
+    Stack stack(0);
+
+    ASSERT_THROW(stack.pop(), StackUnderflow);
+}
+
+TEST(StackTest, pushPastStackThrowsException) {
+    Stack stack(0);
+
+    ASSERT_THROW(stack.push(object(1)), StackOverflow);
 }
 
 TEST(StackTest, pushAndPopReverseTheOrder) {

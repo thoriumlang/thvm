@@ -12,7 +12,8 @@ set(Headers
         cpp/org/thoriumlang/vm/op/Add.h
         cpp/org/thoriumlang/vm/op/Dump.h
         cpp/org/thoriumlang/vm/op/Pop.h
-        )
+        cpp/org/thoriumlang/vm/StackOverflow.h
+        cpp/org/thoriumlang/vm/StackUnderflow.h)
 set(Sources
         cpp/org/thoriumlang/vm/Vm.cpp
         cpp/org/thoriumlang/vm/Stack.cpp
@@ -23,7 +24,8 @@ set(Sources
         cpp/org/thoriumlang/vm/op/Add.cpp
         cpp/org/thoriumlang/vm/op/Dump.cpp
         cpp/org/thoriumlang/vm/op/Pop.cpp
-        )
+        cpp/org/thoriumlang/vm/StackOverflow.cpp
+        cpp/org/thoriumlang/vm/StackUnderflow.cpp)
 
 add_library(${This}core STATIC ${Sources} ${Headers})
 

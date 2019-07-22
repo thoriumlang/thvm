@@ -17,21 +17,27 @@
 #include <cstdlib>
 #include <iostream>
 #include "Stack.h"
+#include "StackOverflow.h"
+#include "StackUnderflow.h"
 
 using namespace org::thoriumlang::vm;
 
 void Stack::push(OBJECT object) {
-    stack[sp] = object;
-    sp++;
+    if (sp >= size) {
+        throw StackOverflow();
+    }
+    stack[sp++] = object;
 }
 
 OBJECT Stack::pop() {
-    sp--;
-    return this->stack[sp];
+    if (sp <= 0) {
+        throw StackUnderflow();
+    }
+    return stack[--sp];
 }
 
 OBJECT Stack::peek() {
-    return this->stack[this->sp - 1];
+    return stack[sp - 1];
 }
 
 Stack::Stack(int size) :
