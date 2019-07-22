@@ -15,3 +15,9 @@
  */
 
 #include "Op.h"
+
+using namespace org::thoriumlang::vm::op;
+
+void Op::operator()(Program *program, Stack *stack) {
+    execute(program, stack);
+}
