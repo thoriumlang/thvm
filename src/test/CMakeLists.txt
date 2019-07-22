@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.14)
 set(This thvm_test)
 
 set(Sources
-        cpp/org/thoriumlang/vm/Stack.cpp
-        cpp/org/thoriumlang/vm/Program.cpp)
+        cpp/org/thoriumlang/vm/StackTest.cpp
+        cpp/org/thoriumlang/vm/ProgramTest.cpp)
 
 add_executable(${This} ${Sources})
 
