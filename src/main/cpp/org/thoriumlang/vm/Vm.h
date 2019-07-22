@@ -31,13 +31,13 @@
 namespace org::thoriumlang::vm {
     class Vm {
         Program program;
-        Stack data;
+        Stack stack;
         op::Op *ops[256]{};
 
         op::Op *decode(uint8_t opCode);
 
     public:
-        Vm(int dataStackSize, Program program);
+        Vm(int stackSize, Program program);
 
         void run();
     };

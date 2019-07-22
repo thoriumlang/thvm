@@ -26,7 +26,7 @@
 using namespace org::thoriumlang::vm;
 using namespace org::thoriumlang::vm::op;
 
-Vm::Vm(int stackSize, Program program) : data(stackSize), program(program) {
+Vm::Vm(int stackSize, Program program) : stack(stackSize), program(program) {
     for (Op *&op : ops) {
         op = Nop::get();
     }
@@ -39,7 +39,7 @@ Vm::Vm(int stackSize, Program program) : data(stackSize), program(program) {
 void Vm::run() {
     uint8_t op;
     while ((op = program.fetch()) != OP_HALT) {
-        decode(op)->execute(&program, &data);
+        decode(op)->execute(&program, &stack);
     }
 
     std::cout << "End" << std::endl;
