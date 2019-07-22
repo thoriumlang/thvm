@@ -30,26 +30,29 @@ OBJECT org::thoriumlang::vm::object(int64_t value) {
 }
 
 void Stack::push(OBJECT object) {
-    if (sp >= size) {
+    if (sp + 1 == size) {
         throw StackOverflow();
     }
-    stack[sp++] = object;
+    stack[++sp] = object;
 }
 
 OBJECT Stack::pop() {
-    if (sp <= 0) {
+    if (sp < 0) {
         throw StackUnderflow();
     }
-    return stack[--sp];
+    return stack[sp--];
 }
 
 OBJECT Stack::peek() {
-    return stack[sp - 1];
+    if (sp < 0) {
+        throw StackUnderflow();
+    }
+    return stack[sp];
 }
 
 Stack::Stack(int size) :
         size(size),
-        sp(0),
+        sp(-1),
         stack((OBJECT *) malloc(sizeof(OBJECT) * size)) {
     std::cout << "Stack size is "
               << size

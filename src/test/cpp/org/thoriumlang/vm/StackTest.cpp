@@ -40,6 +40,12 @@ TEST(StackTest, pushPastStackThrowsException) {
     ASSERT_THROW(stack.push(object(1)), StackOverflow);
 }
 
+TEST(StackTest, peekPastStackThrowsException) {
+    Stack stack(0);
+
+    ASSERT_THROW(stack.peek(), StackUnderflow);
+}
+
 TEST(StackTest, pushAndPopReverseTheOrder) {
     Stack stack(2);
     stack.push(object(1));
