@@ -21,14 +21,6 @@
 
 using namespace org::thoriumlang::vm;
 
-OBJECT object(int64_t value) {
-    OBJECT o;
-    o.i64 = value;
-    o.type = 'I';
-    return o;
-}
-
-
 TEST(StackTest, pushAndPop) {
     Stack stack(1);
     stack.push(object(1));

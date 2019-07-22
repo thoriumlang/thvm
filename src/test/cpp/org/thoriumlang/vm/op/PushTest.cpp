@@ -14,36 +14,23 @@
  * limitations under the License.
  */
 
-#ifndef THVM_STACK_H
-#define THVM_STACK_H
+#include <gtest/gtest.h>
+#include "../../../../../../main/cpp/org/thoriumlang/vm/Stack.h"
+#include "../../../../../../main/cpp/org/thoriumlang/vm/Program.h"
+#include "../../../../../../main/cpp/org/thoriumlang/vm/op/Push.h"
 
-#include <cstdint>
+using namespace org::thoriumlang::vm;
 
-namespace org::thoriumlang::vm {
-    typedef struct OBJECT_t {
-        uint8_t type;
-        union {
-            int64_t i64;
-        };
-    } OBJECT;
+TEST(Push, push) {
+    Stack stack(1);
 
-    OBJECT object(int64_t value);
-
-    class Stack {
-        int size;
-        OBJECT *stack;
-        int sp; // stack pointer
-    public:
-        Stack(int size);
-
-        virtual ~Stack();
-
-        void push(OBJECT object);
-
-        OBJECT pop();
-
-        OBJECT peek();
+    static const uint8_t code[] = {
+            0, 0, 0, 0, 0, 0, 0x07, 0xE3, // 2019
     };
-}
 
-#endif //THVM_STACK_H
+    Program program((uint8_t *) code);
+
+    op::Push::get()->execute(&program, &stack);
+
+    ASSERT_EQ(stack.pop().i64, 2019);
+}

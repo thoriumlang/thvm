@@ -14,36 +14,19 @@
  * limitations under the License.
  */
 
-#ifndef THVM_STACK_H
-#define THVM_STACK_H
 
-#include <cstdint>
+#include <gtest/gtest.h>
+#include "../../../../../../main/cpp/org/thoriumlang/vm/Stack.h"
+#include "../../../../../../main/cpp/org/thoriumlang/vm/op/Add.h"
 
-namespace org::thoriumlang::vm {
-    typedef struct OBJECT_t {
-        uint8_t type;
-        union {
-            int64_t i64;
-        };
-    } OBJECT;
+using namespace org::thoriumlang::vm;
 
-    OBJECT object(int64_t value);
+TEST(Add, add) {
+    Stack stack(2);
+    stack.push(object(1));
+    stack.push(object(2));
 
-    class Stack {
-        int size;
-        OBJECT *stack;
-        int sp; // stack pointer
-    public:
-        Stack(int size);
+    op::Add::get()->execute(nullptr, &stack);
 
-        virtual ~Stack();
-
-        void push(OBJECT object);
-
-        OBJECT pop();
-
-        OBJECT peek();
-    };
+    ASSERT_EQ(stack.pop().i64, 3);
 }
-
-#endif //THVM_STACK_H

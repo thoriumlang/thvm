@@ -4,7 +4,11 @@ set(This thvm_test)
 
 set(Sources
         cpp/org/thoriumlang/vm/StackTest.cpp
-        cpp/org/thoriumlang/vm/ProgramTest.cpp)
+        cpp/org/thoriumlang/vm/ProgramTest.cpp
+        cpp/org/thoriumlang/vm/op/AddTest.cpp
+        cpp/org/thoriumlang/vm/op/PushTest.cpp
+        cpp/org/thoriumlang/vm/op/PopTest.cpp
+        )
 
 add_executable(${This} ${Sources})
 

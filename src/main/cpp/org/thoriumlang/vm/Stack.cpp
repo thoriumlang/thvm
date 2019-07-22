@@ -22,6 +22,13 @@
 
 using namespace org::thoriumlang::vm;
 
+OBJECT org::thoriumlang::vm::object(int64_t value) {
+    OBJECT o;
+    o.type = 'I';
+    o.i64 = value;
+    return o;
+}
+
 void Stack::push(OBJECT object) {
     if (sp >= size) {
         throw StackOverflow();
