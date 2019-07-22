@@ -21,11 +21,13 @@
 using namespace org::thoriumlang::vm;
 
 void Stack::push(OBJECT object) {
-    this->stack[(this->sp)++] = object;
+    stack[sp] = object;
+    sp++;
 }
 
 OBJECT Stack::pop() {
-    return this->stack[--(this->sp)];
+    sp--;
+    return this->stack[sp];
 }
 
 OBJECT Stack::peek() {
@@ -34,7 +36,7 @@ OBJECT Stack::peek() {
 
 Stack::Stack(int size) :
         size(size),
-        sp(-1),
+        sp(0),
         stack((OBJECT *) malloc(sizeof(OBJECT) * size)) {
     std::cout << "Stack size is "
               << size

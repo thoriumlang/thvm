@@ -15,7 +15,38 @@
  */
 
 #include <gtest/gtest.h>
+#include "../../../../../main/cpp/org/thoriumlang/vm/Stack.h"
 
-TEST(StackTest, nothing) {
-    ASSERT_TRUE(true);
+using namespace org::thoriumlang::vm;
+
+OBJECT object(int64_t value) {
+    OBJECT o;
+    o.i64 = value;
+    o.type = 'I';
+    return o;
+}
+
+
+TEST(StackTest, pushAndPop) {
+    Stack stack(1);
+    stack.push(object(1));
+
+    ASSERT_EQ(stack.pop().i64, 1);
+}
+
+TEST(StackTest, pushAndPopReverseTheOrder) {
+    Stack stack(2);
+    stack.push(object(1));
+    stack.push(object(2));
+
+    ASSERT_EQ(stack.pop().i64, 2);
+    ASSERT_EQ(stack.pop().i64, 1);
+}
+
+TEST(StackTest, peek) {
+    Stack stack(1);
+    stack.push(object(1));
+
+    ASSERT_EQ(stack.peek().i64, 1);
+    ASSERT_EQ(stack.peek().i64, 1);
 }
