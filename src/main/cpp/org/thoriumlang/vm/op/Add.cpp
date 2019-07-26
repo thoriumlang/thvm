@@ -24,9 +24,5 @@ void Add::execute(Program *program, Stack *stack) {
     const OBJECT &o2 = stack->pop();
     const OBJECT &o1 = stack->pop();
 
-    OBJECT o;
-    o.type = 'I';
-    o.i64 = o1.i64 + o2.i64;
-
-    stack->push(o);
+    stack->push(object(std::get<int64_t>(o1) + std::get<int64_t>(o2)));
 }

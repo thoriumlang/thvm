@@ -32,5 +32,5 @@ TEST(Push, push) {
 
     op::Push::get()->execute(&program, &stack);
 
-    ASSERT_EQ(stack.pop().i64, 2019);
+    ASSERT_EQ(std::get<int64_t>(stack.pop()), 2019);
 }

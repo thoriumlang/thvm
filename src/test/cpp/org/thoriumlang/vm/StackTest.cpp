@@ -25,7 +25,7 @@ TEST(StackTest, pushAndPop) {
     Stack stack(1);
     stack.push(object(1));
 
-    ASSERT_EQ(stack.pop().i64, 1);
+    ASSERT_EQ(std::get<int64_t>(stack.pop()), 1);
 }
 
 TEST(StackTest, popPastStackThrowsException) {
@@ -51,14 +51,14 @@ TEST(StackTest, pushAndPopReverseTheOrder) {
     stack.push(object(1));
     stack.push(object(2));
 
-    ASSERT_EQ(stack.pop().i64, 2);
-    ASSERT_EQ(stack.pop().i64, 1);
+    ASSERT_EQ(std::get<int64_t>(stack.pop()), 2);
+    ASSERT_EQ(std::get<int64_t>(stack.pop()), 1);
 }
 
 TEST(StackTest, peek) {
     Stack stack(1);
     stack.push(object(1));
 
-    ASSERT_EQ(stack.peek().i64, 1);
-    ASSERT_EQ(stack.peek().i64, 1);
+    ASSERT_EQ(std::get<int64_t>(stack.peek()), 1);
+    ASSERT_EQ(std::get<int64_t>(stack.peek()), 1);
 }

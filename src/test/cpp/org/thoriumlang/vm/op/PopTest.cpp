@@ -28,5 +28,5 @@ TEST(Pop, pop) {
 
     op::Pop::get()->execute(nullptr, &stack);
 
-    ASSERT_EQ(stack.peek().i64, 2019);
+    ASSERT_EQ(std::get<int64_t>(stack.peek()), 2019);
 }

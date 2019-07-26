@@ -28,5 +28,5 @@ TEST(Add, add) {
 
     op::Add::get()->execute(nullptr, &stack);
 
-    ASSERT_EQ(stack.pop().i64, 3);
+    ASSERT_EQ(std::get<int64_t>(stack.pop()), 3);
 }

@@ -25,9 +25,6 @@ void Dump::execute(Program *program, Stack *stack) {
     const OBJECT &o = stack->peek();
 
     std::cout << "Top of stack: "
-              << o.i64
-              << " ("
-              << o.type
-              << ")"
+              << std::get<int64_t>(o)
               << std::endl;
 }

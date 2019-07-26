@@ -18,25 +18,20 @@
 #define THVM_STACK_H
 
 #include <cstdint>
+#include <variant>
+#include <vector>
 
 namespace org::thoriumlang::vm {
-    typedef struct OBJECT_t {
-        uint8_t type;
-        union {
-            int64_t i64;
-        };
-    } OBJECT;
+    typedef std::variant<int64_t> OBJECT;
 
     OBJECT object(int64_t value);
 
     class Stack {
         int size;
-        OBJECT *stack;
+        std::vector<OBJECT> stack;
         int sp; // stack pointer
     public:
         Stack(int size);
-
-        virtual ~Stack();
 
         void push(OBJECT object);
 

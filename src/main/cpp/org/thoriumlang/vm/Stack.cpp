@@ -23,10 +23,7 @@
 using namespace org::thoriumlang::vm;
 
 OBJECT org::thoriumlang::vm::object(int64_t value) {
-    OBJECT o;
-    o.type = 'I';
-    o.i64 = value;
-    return o;
+    return OBJECT(value);
 }
 
 void Stack::push(OBJECT object) {
@@ -52,16 +49,10 @@ OBJECT Stack::peek() {
 
 Stack::Stack(int size) :
         size(size),
-        sp(-1),
-        stack((OBJECT *) malloc(sizeof(OBJECT) * size)) {
+        stack(size),
+        sp(-1) {
     std::cout << "Stack size is "
               << size
-              << ". Memory usage is "
-              << sizeof(OBJECT) * size
-              << " bytes."
+              << "."
               << std::endl;
-}
-
-Stack::~Stack() {
-    free(stack);
 }
