@@ -1,63 +1,41 @@
-dist: trusty
 language: cpp
 git:
   depth: false
+services:
+  - docker
 matrix:
   include:
     - os: linux
+      env:
+        - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5 CXXFLAGS='-Wall -B/usr/lib/gcc/x86_64-linux-gnu/7' && SONAR=false"
+    - os: linux
+      env:
+        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6 CXXFLAGS='-Wall -B/usr/lib/gcc/x86_64-linux-gnu/7' && SONAR=false"
+    - os: linux
+      env:
+        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7 CXXFLAGS='-Wall' && SONAR=false"
+    - os: linux
+      env:
+        - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8 CXXFLAGS='-Wall' && SONAR=true"
       addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-6
         sonarcloud:
           organization: "thoriumlang"
           token:
             secure: $SONARQUBE_TOKEN
-      env:
-        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6 && SONAR=true"
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.8
-          packages:
-            - libstdc++-6-dev
-            - clang-3.8
-      env:
-        - MATRIX_EVAL="CC=clang-3.8 && CXX=clang++-3.8 && SONAR=false"
-cache:
-  directories:
-    - ${TRAVIS_BUILD_DIR}/deps
-
-before_install:
-  - eval "${MATRIX_EVAL}"
-install:
-  - |
-    DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
-    if [[ "${TRAVIS_OS_NAME}" = "linux" ]]; then
-      if [ ! -d ${DEPS_DIR}/cmake-3.14.0-Linux-x86_64 ]; then
-        CMAKE_URL="https://github.com/Kitware/CMake/releases/download/v3.14.0/cmake-3.14.0-Linux-x86_64.tar.gz"
-        cd ${DEPS_DIR};
-        travis_retry wget --no-check-certificate "$CMAKE_URL"
-        tar -xf cmake-3.14.0-Linux-x86_64.tar.gz
-      fi
-      export PATH=${DEPS_DIR}/cmake-3.14.0-Linux-x86_64/bin:${PATH}
-    fi
 before_script:
-  - cmake --version
-  - $CXX --version
+  - eval "${MATRIX_EVAL}"
   - env | grep -v SONARQUBE_TOKEN
-  - cd "${TRAVIS_BUILD_DIR}"
-  - mkdir build; cp sonar.properties build; cd build
-  - cmake ..
 script:
   - |
+    docker run --rm -it \
+      -v `pwd`:/sources:ro \
+      -v `pwd`/bw-output:/bw-output \
+      -e CC="$CC" \
+      -e CXX="$CXX" \
+      -e CXXFLAGS="$CXXFLAGS" \
+      -e SONAR="$SONAR" \
+      cpollet/cpp
+  - |
     if [ "$SONAR" = "true" ]; then
-      build-wrapper-linux-x86-64 --out-dir bw-output make clean all test
       sonar-scanner -Dproject.settings=sonar.properties
-    else
-      make clean all test
     fi
