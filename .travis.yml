@@ -1,3 +1,4 @@
+dist: trusty
 language: cpp
 git:
   depth: false
@@ -7,35 +8,72 @@ matrix:
   include:
     - os: linux
       env:
-        - MATRIX_EVAL="CC=gcc-5 && CXX=g++-5 CXXFLAGS='-Wall -B/usr/lib/gcc/x86_64-linux-gnu/7' && SONAR=false"
+        - CC=gcc-5
+        - CXX=g++-5
+        - CXXFLAGS='-Wall -B/usr/lib/gcc/x86_64-linux-gnu/7'
+        - SONAR=false
+        - DOCKER=true
     - os: linux
       env:
-        - MATRIX_EVAL="CC=gcc-6 && CXX=g++-6 CXXFLAGS='-Wall -B/usr/lib/gcc/x86_64-linux-gnu/7' && SONAR=false"
+        - CC=gcc-6
+        - CXX=g++-6
+        - CXXFLAGS='-Wall -B/usr/lib/gcc/x86_64-linux-gnu/7'
+        - SONAR=false
+        - DOCKER=true
     - os: linux
       env:
-        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7 CXXFLAGS='-Wall' && SONAR=false"
+        - CC=gcc-7
+        - CXX=g++-7
+        - CXXFLAGS='-Wall'
+        - SONAR=false
+        - DOCKER=true
     - os: linux
       env:
-        - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8 CXXFLAGS='-Wall' && SONAR=true"
+        - CC=gcc-8
+        - CXX=g++-8
+        - CXXFLAGS='-Wall'
+        - SONAR=true
+        - DOCKER=false
       addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - cmake
+            - g++-8
+            - libstdc++-8-dev
         sonarcloud:
           organization: "thoriumlang"
           token:
             secure: $SONARQUBE_TOKEN
+install:
+  - |
+    if [ "$DOCKER" = "false" ]; then
+      sudo apt-get update
+      sudo apt-get install -y $APT_PACKAGES
+    fi
 before_script:
-  - eval "${MATRIX_EVAL}"
-  - env | grep -v SONARQUBE_TOKEN
+  - env | grep -v SONARQUBE_TOKEN | sort
+  - mkdir build; cp sonar.properties build/; cd build
 script:
   - |
-    docker run --rm -it \
-      -v `pwd`:/sources:ro \
-      -v `pwd`/bw-output:/bw-output \
-      -e CC="$CC" \
-      -e CXX="$CXX" \
-      -e CXXFLAGS="$CXXFLAGS" \
-      -e SONAR="$SONAR" \
-      cpollet/cpp
+    if [ "$DOCKER" = "true" ]; then
+      docker run --rm -it \
+        -v `pwd`/..:/src:ro \
+        -v `pwd`:/build \
+        -e CC="$CC" \
+        -e CXX="$CXX" \
+        -e CXXFLAGS="$CXXFLAGS" \
+        -e SONAR="$SONAR" \
+        cpollet/cpp
+    elif [ "$SONAR" = "true" ]; then
+      cmake ..
+      build-wrapper-linux-x86-64 --out-dir bw-output make clean all test
+    else
+      cmake ..
+      make clean all test
+    fi
   - |
     if [ "$SONAR" = "true" ]; then
-      sonar-scanner -Dproject.settings=sonar.properties
+      sonar-scanner -X -Dsonar.verbose=true -Dproject.settings=sonar.properties
     fi
