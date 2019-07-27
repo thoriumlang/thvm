@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright 2019 Christophe Pollet
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,6 +20,6 @@ using namespace org::thoriumlang::vm::op;
 
 Pop Pop::instance;
 
-void Pop::execute(Program *program, Stack *stack) {
+void Pop::execute(Program *, Stack *stack) {
     stack->pop();
 }

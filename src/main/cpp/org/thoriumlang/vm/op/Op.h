@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright 2019 Christophe Pollet
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,8 +21,19 @@
 #include "../Stack.h"
 
 namespace org::thoriumlang::vm::op {
+    enum OP : uint8_t {
+        NOP = 0,
+        PUSH = 1,
+        ADD = 2,
+        DUMP = 3,
+        POP = 4,
+        HALT = 255
+    };
+
     class Op {
     public:
+        virtual ~Op() = default;
+
         virtual void execute(Program *program, Stack *stack) = 0;
 
         void operator()(Program *program, Stack *stack);

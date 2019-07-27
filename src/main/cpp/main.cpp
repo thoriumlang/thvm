@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright 2019 Christophe Pollet
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,19 +16,20 @@
 
 #include <iostream>
 #include "org/thoriumlang/vm/Vm.h"
+#include "org/thoriumlang/vm/op/Op.h"
 
 using namespace org::thoriumlang::vm;
 
-int main(int argc, char *argv[]) {
+int main() {
     static const uint8_t program[] = {
-            OP_PUSH,
+            op::OP::PUSH,
             0, 0, 0, 0, 0, 0, 0x07, 0xE3, // 2019
-            OP_PUSH,
+            op::OP::PUSH,
             0, 0, 0, 0, 0, 0, 0, 1,       // 1
-            OP_ADD,
-            OP_DUMP,
-            OP_POP,
-            OP_HALT
+            op::OP::ADD,
+            op::OP::DUMP,
+            op::OP::POP,
+            op::OP::HALT
     };
 
     Vm(

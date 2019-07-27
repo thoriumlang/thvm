@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright 2019 Christophe Pollet
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,8 +18,7 @@
 
 using namespace org::thoriumlang::vm;
 
-Program::Program(uint8_t *code) :
-        code(code), ip(code) {
+Program::Program(uint8_t *code) : code(code), ip(code) {
     // nothing
 }
 

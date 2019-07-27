@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright 2019 Christophe Pollet
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,7 +20,7 @@ using namespace org::thoriumlang::vm::op;
 
 Add Add::instance;
 
-void Add::execute(Program *program, Stack *stack) {
+void Add::execute(Program *, Stack *stack) {
     const OBJECT &o2 = stack->pop();
     const OBJECT &o1 = stack->pop();
 

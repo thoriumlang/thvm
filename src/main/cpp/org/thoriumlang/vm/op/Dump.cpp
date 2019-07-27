@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright 2019 Christophe Pollet
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +21,7 @@ using namespace org::thoriumlang::vm::op;
 
 Dump Dump::instance;
 
-void Dump::execute(Program *program, Stack *stack) {
+void Dump::execute(Program *, Stack *stack) {
     const OBJECT &o = stack->peek();
 
     std::cout << "Top of stack: "

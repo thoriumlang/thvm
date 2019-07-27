@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright 2019 Christophe Pollet
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,13 +20,6 @@
 #include "Stack.h"
 #include "Program.h"
 #include "op/Op.h"
-
-#define OP_HALT 0
-#define NOP 0
-#define OP_PUSH 1
-#define OP_ADD 2
-#define OP_DUMP 3
-#define OP_POP 4
 
 namespace org::thoriumlang::vm {
     class Vm {

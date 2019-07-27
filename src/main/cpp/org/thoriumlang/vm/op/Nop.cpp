@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright 2019 Christophe Pollet
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,6 +20,6 @@ using namespace org::thoriumlang::vm::op;
 
 Nop Nop::instance;
 
-void Nop::execute(Program *program, Stack *stack) {
+void Nop::execute(Program *, Stack *) {
     // nothing
 }

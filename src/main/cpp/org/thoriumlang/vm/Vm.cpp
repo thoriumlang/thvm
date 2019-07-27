@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright 2019 Christophe Pollet
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,19 +26,19 @@
 using namespace org::thoriumlang::vm;
 using namespace org::thoriumlang::vm::op;
 
-Vm::Vm(int stackSize, Program program) : stack(stackSize), program(program) {
+Vm::Vm(int stackSize, Program program) : program(program), stack(stackSize) {
     for (Op *&op : ops) {
         op = Nop::get();
     }
-    ops[OP_PUSH] = Push::get();
-    ops[OP_ADD] = Add::get();
-    ops[OP_DUMP] = Dump::get();
-    ops[OP_POP] = Pop::get();
+    ops[OP::PUSH] = Push::get();
+    ops[OP::ADD] = Add::get();
+    ops[OP::DUMP] = Dump::get();
+    ops[OP::POP] = Pop::get();
 }
 
 void Vm::run() {
     uint8_t op;
-    while ((op = program.fetch()) != OP_HALT) {
+    while ((op = program.fetch()) != OP::HALT) {
         decode(op)->execute(&program, &stack);
     }
 
