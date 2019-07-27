@@ -28,11 +28,15 @@ int main() {
     code.append(op::OPCODE::ADD);
     code.append(op::OPCODE::DUMP);
     code.append(op::OPCODE::POP);
+
+    // exit code
+    code.append(op::OPCODE::PUSH);
+    code.append(0);
+
     code.append(op::OPCODE::HALT);
 
-    Vm(
+    return Vm(
             1024,
             code
     ).run();
-    return 0;
 }
