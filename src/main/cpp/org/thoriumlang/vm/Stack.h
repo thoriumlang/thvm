@@ -31,7 +31,7 @@ namespace org::thoriumlang::vm {
         std::vector<OBJECT> stack;
         int sp; // stack pointer
     public:
-        Stack(int size);
+        explicit Stack(int size);
 
         void push(OBJECT object);
 

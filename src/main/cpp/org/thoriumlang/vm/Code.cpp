@@ -17,8 +17,6 @@
 #include "Code.h"
 #include "opcodes.h"
 
-using namespace org::thoriumlang::vm;
-
 unsigned long Code::physicalSize() {
     return code.size();
 }

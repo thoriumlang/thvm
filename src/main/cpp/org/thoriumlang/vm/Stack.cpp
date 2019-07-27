@@ -35,14 +35,17 @@ void Stack::push(OBJECT object) {
     if (sp + 1 == size) {
         throw StackOverflow();
     }
-    stack[++sp] = object;
+    sp++;
+    stack[sp] = object;
 }
 
 OBJECT Stack::pop() {
     if (sp < 0) {
         throw StackUnderflow();
     }
-    return stack[sp--];
+    OBJECT o = stack[sp];
+    sp--;
+    return o;
 }
 
 OBJECT Stack::peek() {
