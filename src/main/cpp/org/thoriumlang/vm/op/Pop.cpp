@@ -20,6 +20,6 @@ using namespace org::thoriumlang::vm::op;
 
 Pop Pop::instance;
 
-void Pop::execute(Program *, Stack *stack) {
+void Pop::execute(Code &, Stack *stack) {
     stack->pop();
 }

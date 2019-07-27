@@ -17,26 +17,17 @@
 #ifndef THVM_OP_H
 #define THVM_OP_H
 
-#include "../Program.h"
 #include "../Stack.h"
+#include "../Code.h"
 
 namespace org::thoriumlang::vm::op {
-    enum OP : uint8_t {
-        NOP = 0,
-        PUSH = 1,
-        ADD = 2,
-        DUMP = 3,
-        POP = 4,
-        HALT = 255
-    };
-
     class Op {
     public:
         virtual ~Op() = default;
 
-        virtual void execute(Program *program, Stack *stack) = 0;
+        virtual void execute(Code &code, Stack *stack) = 0;
 
-        void operator()(Program *program, Stack *stack);
+        void operator()(Code &code, Stack *stack);
     };
 }
 

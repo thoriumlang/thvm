@@ -18,13 +18,14 @@
 #define THVM_ADD_H
 
 #include "Op.h"
+#include "../Code.h"
 
 namespace org::thoriumlang::vm::op {
     class Add : public Op {
         static Add instance;
 
     public:
-        void execute(Program *program, Stack *stack) override;
+        void execute(Code &code, Stack *stack) override;
 
         static Add *get() noexcept {
             return &instance;

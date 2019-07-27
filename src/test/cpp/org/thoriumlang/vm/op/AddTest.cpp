@@ -26,7 +26,8 @@ TEST(Add, add) {
     stack.push(object(1));
     stack.push(object(2));
 
-    op::Add::get()->execute(nullptr, &stack);
+    Code code;
+    op::Add::get()->execute(code, &stack);
 
     ASSERT_EQ(std::get<int64_t>(stack.pop()), 3);
 }

@@ -14,29 +14,42 @@
  * limitations under the License.
  */
 
-#include <gtest/gtest.h>
-#include "../../../../../main/cpp/org/thoriumlang/vm/Program.h"
+#include "Code.h"
+#include "opcodes.h"
 
 using namespace org::thoriumlang::vm;
 
-TEST(ProgramTest, fetchOpCodes) {
-    static const uint8_t codes[] = {
-            1,
-            0
-    };
-    Program program((uint8_t *) codes);
-
-    ASSERT_EQ(program.fetch(), (uint8_t) 1);
-    ASSERT_EQ(program.fetch(), (uint8_t) 0);
+unsigned long Code::physicalSize() {
+    return code.size();
 }
 
-TEST(ProgramTest, fetchInteger) {
-    static const uint8_t codes[] = {
-            0, 0, 0, 0, 0, 0, 0, 1,       // 1
-            0, 0, 0, 0, 0, 0, 0x07, 0xE3, // 2019
-    };
-    Program program((uint8_t *) codes);
-
-    ASSERT_EQ(program.nextInt(), (int64_t) 1);
-    ASSERT_EQ(program.nextInt(), (int64_t) 2019);
+void Code::append(op::OPCODE op) {
+    code.push_back(op);
 }
+
+void Code::append(int64_t value) {
+    for (int i = 1; i <= 8; i++) {
+        append((op::OPCODE) (value >> ((8 - i) * 8)));
+    }
+}
+
+void Code::append(const std::vector<uint8_t> &elements) {
+    code.insert(code.end(), elements.begin(), elements.end());
+}
+
+uint8_t Code::op() {
+    ip++;
+    return code[ip];
+}
+
+int64_t Code::integer() {
+    int value = 0;
+
+    for (int i = 0; i < 8; i++) {
+        value = value << 8 | op();
+    }
+
+    return value;
+}
+
+

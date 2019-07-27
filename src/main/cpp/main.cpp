@@ -16,26 +16,23 @@
 
 #include <iostream>
 #include "org/thoriumlang/vm/Vm.h"
-#include "org/thoriumlang/vm/op/Op.h"
 
 using namespace org::thoriumlang::vm;
 
 int main() {
-    static const uint8_t program[] = {
-            op::OP::PUSH,
-            0, 0, 0, 0, 0, 0, 0x07, 0xE3, // 2019
-            op::OP::PUSH,
-            0, 0, 0, 0, 0, 0, 0, 1,       // 1
-            op::OP::ADD,
-            op::OP::DUMP,
-            op::OP::POP,
-            op::OP::HALT
-    };
+    Code code;
+    code.append(op::OPCODE::PUSH);
+    code.append(2019);
+    code.append(op::OPCODE::PUSH);
+    code.append(1);
+    code.append(op::OPCODE::ADD);
+    code.append(op::OPCODE::DUMP);
+    code.append(op::OPCODE::POP);
+    code.append(op::OPCODE::HALT);
 
     Vm(
             1024,
-            Program((uint8_t *) &program[0])
+            code
     ).run();
     return 0;
 }
-

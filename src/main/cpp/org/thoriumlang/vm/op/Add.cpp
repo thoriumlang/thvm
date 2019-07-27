@@ -15,12 +15,13 @@
  */
 
 #include "Add.h"
+#include "../Code.h"
 
 using namespace org::thoriumlang::vm::op;
 
 Add Add::instance;
 
-void Add::execute(Program *, Stack *stack) {
+void Add::execute(Code &, Stack *stack) {
     const OBJECT &o2 = stack->pop();
     const OBJECT &o1 = stack->pop();
 

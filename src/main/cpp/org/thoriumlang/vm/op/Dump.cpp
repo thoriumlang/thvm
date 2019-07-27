@@ -21,7 +21,7 @@ using namespace org::thoriumlang::vm::op;
 
 Dump Dump::instance;
 
-void Dump::execute(Program *, Stack *stack) {
+void Dump::execute(Code &, Stack *stack) {
     const OBJECT &o = stack->peek();
 
     std::cout << "Top of stack: "

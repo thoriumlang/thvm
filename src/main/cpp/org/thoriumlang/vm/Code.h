@@ -14,23 +14,30 @@
  * limitations under the License.
  */
 
-#ifndef THVM_PROGRAM_H
-#define THVM_PROGRAM_H
+#ifndef THVM_CODE_H
+#define THVM_CODE_H
 
+#include <vector>
+#include "opcodes.h"
 
-#include <cstdint>
+using namespace org::thoriumlang::vm;
 
-namespace org::thoriumlang::vm {
-    class Program {
-        uint8_t *code;
-        uint8_t *ip; // instruction pointer
-    public:
-        Program(uint8_t *code);
+class Code {
+    int ip = -1;
+    std::vector<uint8_t> code;
 
-        uint8_t fetch();
+public:
+    unsigned long physicalSize();
 
-        int nextInt();
-    };
-}
+    void append(op::OPCODE op);
 
-#endif //THVM_PROGRAM_H
+    void append(int64_t value);
+
+    void append(const std::vector<uint8_t> &elements);
+
+    uint8_t op();
+
+    int64_t integer();
+};
+
+#endif //THVM_CODE_H

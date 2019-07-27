@@ -24,7 +24,7 @@ namespace org::thoriumlang::vm::op {
         static Dump instance;
 
     public:
-        void execute(Program *program, Stack *stack) override;
+        void execute(Code &code, Stack *stack) override;
 
         static Dump *get() noexcept {
             return &instance;

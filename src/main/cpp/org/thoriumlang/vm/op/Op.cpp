@@ -18,6 +18,6 @@
 
 using namespace org::thoriumlang::vm::op;
 
-void Op::operator()(Program *program, Stack *stack) {
-    execute(program, stack);
+void Op::operator()(Code &code, Stack *stack) {
+    execute(code, stack);
 }

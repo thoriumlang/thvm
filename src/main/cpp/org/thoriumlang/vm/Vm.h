@@ -18,19 +18,19 @@
 #define THVM_VM_H
 
 #include "Stack.h"
-#include "Program.h"
+#include "Code.h"
 #include "op/Op.h"
 
 namespace org::thoriumlang::vm {
     class Vm {
-        Program program;
+        Code code;
         Stack stack;
         op::Op *ops[256]{};
-
+        uint8_t fetch();
         op::Op *decode(uint8_t opCode);
 
     public:
-        Vm(int stackSize, Program program);
+        Vm(int stackSize, Code &code);
 
         void run();
     };

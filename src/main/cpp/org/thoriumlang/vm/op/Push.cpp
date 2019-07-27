@@ -20,6 +20,6 @@ using namespace org::thoriumlang::vm::op;
 
 Push Push::instance;
 
-void Push::execute(Program *program, Stack *stack) {
-    stack->push(object(program->nextInt()));
+void Push::execute(Code &code, Stack *stack) {
+    stack->push(object(code.integer()));
 }

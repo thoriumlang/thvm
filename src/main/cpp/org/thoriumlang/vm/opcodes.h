@@ -14,25 +14,19 @@
  * limitations under the License.
  */
 
-#include "Program.h"
+#ifndef THVM_OPCODES_H
+#define THVM_OPCODES_H
 
-using namespace org::thoriumlang::vm;
+#include <cstdint>
 
-Program::Program(uint8_t *code) : code(code), ip(code) {
-    // nothing
+namespace org::thoriumlang::vm::op {
+    enum OPCODE : uint8_t {
+        NOOP = 0,
+        PUSH = 1,
+        ADD = 2,
+        DUMP = 3,
+        POP = 4,
+        HALT = 255,
+    };
 }
-
-uint8_t Program::fetch() {
-    return *ip++;
-}
-
-int Program::nextInt() {
-    int64_t int64 = 0;
-
-    for (int i = 0; i < 8; i++) {
-        int64 = int64 << 8;
-        int64 += (int64_t) fetch();
-    }
-
-    return int64;
-}
+#endif //THVM_OPCODES_H

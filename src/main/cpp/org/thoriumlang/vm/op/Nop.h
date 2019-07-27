@@ -24,7 +24,7 @@ namespace org::thoriumlang::vm::op {
         static Nop instance;
 
     public:
-        void execute(Program *program, Stack *stack) override;
+        void execute(Code &code, Stack *stack) override;
 
         static Nop *get() noexcept {
             return &instance;

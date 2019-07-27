@@ -26,23 +26,27 @@
 using namespace org::thoriumlang::vm;
 using namespace org::thoriumlang::vm::op;
 
-Vm::Vm(int stackSize, Program program) : program(program), stack(stackSize) {
+Vm::Vm(int stackSize, Code &code) : code(code), stack(stackSize) {
     for (Op *&op : ops) {
         op = Nop::get();
     }
-    ops[OP::PUSH] = Push::get();
-    ops[OP::ADD] = Add::get();
-    ops[OP::DUMP] = Dump::get();
-    ops[OP::POP] = Pop::get();
+    ops[OPCODE::PUSH] = Push::get();
+    ops[OPCODE::ADD] = Add::get();
+    ops[OPCODE::DUMP] = Dump::get();
+    ops[OPCODE::POP] = Pop::get();
 }
 
 void Vm::run() {
     uint8_t op;
-    while ((op = program.fetch()) != OP::HALT) {
-        decode(op)->execute(&program, &stack);
+    while ((op = fetch()) != OPCODE::HALT) {
+        decode(op)->execute(code, &stack);
     }
 
     std::cout << "End" << std::endl;
+}
+
+inline uint8_t Vm::fetch() {
+    return code.op();
 }
 
 op::Op *Vm::decode(uint8_t opCode) {

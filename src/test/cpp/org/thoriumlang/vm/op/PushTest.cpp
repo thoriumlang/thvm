@@ -16,7 +16,6 @@
 
 #include <gtest/gtest.h>
 #include "../../../../../../main/cpp/org/thoriumlang/vm/Stack.h"
-#include "../../../../../../main/cpp/org/thoriumlang/vm/Program.h"
 #include "../../../../../../main/cpp/org/thoriumlang/vm/op/Push.h"
 
 using namespace org::thoriumlang::vm;
@@ -24,13 +23,10 @@ using namespace org::thoriumlang::vm;
 TEST(Push, push) {
     Stack stack(1);
 
-    static const uint8_t code[] = {
-            0, 0, 0, 0, 0, 0, 0x07, 0xE3, // 2019
-    };
+    Code code;
+    code.append(std::vector<uint8_t>({0, 0, 0, 0, 0, 0, 0x07, 0xE3 /*2019*/}));
 
-    Program program((uint8_t *) code);
-
-    op::Push::get()->execute(&program, &stack);
+    op::Push::get()->execute(code, &stack);
 
     ASSERT_EQ(std::get<int64_t>(stack.pop()), 2019);
 }

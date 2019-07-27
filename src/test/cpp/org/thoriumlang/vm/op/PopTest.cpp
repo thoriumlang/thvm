@@ -16,7 +16,6 @@
 
 #include <gtest/gtest.h>
 #include "../../../../../../main/cpp/org/thoriumlang/vm/Stack.h"
-#include "../../../../../../main/cpp/org/thoriumlang/vm/Program.h"
 #include "../../../../../../main/cpp/org/thoriumlang/vm/op/Pop.h"
 
 using namespace org::thoriumlang::vm;
@@ -26,7 +25,9 @@ TEST(Pop, pop) {
     stack.push(object(2019));
     stack.push(object(2020));
 
-    op::Pop::get()->execute(nullptr, &stack);
+    Code code;
+
+    op::Pop::get()->execute(code, &stack);
 
     ASSERT_EQ(std::get<int64_t>(stack.peek()), 2019);
 }

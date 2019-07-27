@@ -22,6 +22,11 @@
 
 using namespace org::thoriumlang::vm;
 
+Stack::Stack(int size) :
+        size(size),
+        stack(size),
+        sp(-1) {}
+
 OBJECT org::thoriumlang::vm::object(int64_t value) {
     return OBJECT(value);
 }
@@ -45,14 +50,4 @@ OBJECT Stack::peek() {
         throw StackUnderflow();
     }
     return stack[sp];
-}
-
-Stack::Stack(int size) :
-        size(size),
-        stack(size),
-        sp(-1) {
-    std::cout << "Stack size is "
-              << size
-              << "."
-              << std::endl;
 }
