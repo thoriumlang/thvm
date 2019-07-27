@@ -5,7 +5,7 @@ env
 cd /build || exit
 
 echo Build /src in "$(pwd)..."
-cmake -DCMAKE_BUILD_TYPE=Debug /src
+cmake -DCMAKE_BUILD_TYPE="$CMAKE_BUILD_TYPE" /src
 
 if [ "$SONAR" = "true" ]; then
   /build-wrapper-linux-x86/build-wrapper-linux-x86-64 --out-dir bw-output make clean all test
