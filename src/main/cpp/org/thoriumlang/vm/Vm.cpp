@@ -36,13 +36,13 @@ Vm::Vm(int stackSize, Code &code) : code(code), stack(stackSize) {
     ops[OPCODE::POP] = Pop::get();
 }
 
-void Vm::run() {
+int Vm::run() {
     uint8_t op;
     while ((op = fetch()) != OPCODE::HALT) {
         decode(op)->execute(code, &stack);
     }
 
-    std::cout << "End" << std::endl;
+    return std::get<int64_t>(stack.pop());
 }
 
 inline uint8_t Vm::fetch() {

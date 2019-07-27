@@ -14,26 +14,18 @@
  * limitations under the License.
  */
 
-#ifndef THVM_VM_H
-#define THVM_VM_H
+#include <gtest/gtest.h>
+#include "../../../../../main/cpp/org/thoriumlang/vm/Vm.h"
 
-#include "Stack.h"
-#include "Code.h"
-#include "op/Op.h"
+using namespace org::thoriumlang::vm;
 
-namespace org::thoriumlang::vm {
-    class Vm {
-        Code code;
-        Stack stack;
-        op::Op *ops[256]{};
-        uint8_t fetch();
-        op::Op *decode(uint8_t opCode);
+TEST(Vm, exitCode) {
+    Code code;
+    code.append(op::OPCODE::PUSH);
+    code.append(1);
+    code.append(op::OPCODE::HALT);
 
-    public:
-        Vm(int stackSize, Code &code);
+    Vm vm(1, code);
 
-        int run();
-    };
+    ASSERT_EQ(vm.run(), 1);
 }
-
-#endif //THVM_VM_H

@@ -5,7 +5,8 @@ set(Sources
         cpp/org/thoriumlang/vm/op/AddTest.cpp
         cpp/org/thoriumlang/vm/op/PushTest.cpp
         cpp/org/thoriumlang/vm/op/PopTest.cpp
-        cpp/org/thoriumlang/vm/CodeTest.cpp)
+        cpp/org/thoriumlang/vm/CodeTest.cpp
+        cpp/org/thoriumlang/vm/VmTest.cpp)
 
 add_executable(${This} ${Sources})
 
