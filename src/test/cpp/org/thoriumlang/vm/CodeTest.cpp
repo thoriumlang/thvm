@@ -18,6 +18,7 @@
 #include <vector>
 #include "../../../../../main/cpp/org/thoriumlang/vm/Code.h"
 
+using namespace org::thoriumlang::vm;
 using namespace org::thoriumlang::vm::op;
 
 TEST(CodeTest, appendOp) {

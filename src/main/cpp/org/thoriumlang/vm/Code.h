@@ -20,24 +20,24 @@
 #include <vector>
 #include "opcodes.h"
 
-using namespace org::thoriumlang::vm;
+namespace org::thoriumlang::vm {
+    class Code {
+        int ip = -1;
+        std::vector<uint8_t> code;
 
-class Code {
-    int ip = -1;
-    std::vector<uint8_t> code;
+    public:
+        unsigned long physicalSize();
 
-public:
-    unsigned long physicalSize();
+        void append(op::OPCODE op);
 
-    void append(op::OPCODE op);
+        void append(int64_t value);
 
-    void append(int64_t value);
+        void append(const std::vector<uint8_t> &elements);
 
-    void append(const std::vector<uint8_t> &elements);
+        uint8_t op();
 
-    uint8_t op();
-
-    int64_t integer();
-};
+        int64_t integer();
+    };
+}
 
 #endif //THVM_CODE_H

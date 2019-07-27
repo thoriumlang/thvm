@@ -18,22 +18,23 @@
 #include "org/thoriumlang/vm/Vm.h"
 
 using namespace org::thoriumlang::vm;
+using namespace org::thoriumlang::vm::op;
 
 int main() {
     Code code;
-    code.append(op::OPCODE::PUSH);
+    code.append(OPCODE::PUSH);
     code.append(2019);
-    code.append(op::OPCODE::PUSH);
+    code.append(OPCODE::PUSH);
     code.append(1);
-    code.append(op::OPCODE::ADD);
-    code.append(op::OPCODE::DUMP);
-    code.append(op::OPCODE::POP);
+    code.append(OPCODE::ADD);
+    code.append(OPCODE::DUMP);
+    code.append(OPCODE::POP);
 
     // exit code
-    code.append(op::OPCODE::PUSH);
+    code.append(OPCODE::PUSH);
     code.append(0);
 
-    code.append(op::OPCODE::HALT);
+    code.append(OPCODE::HALT);
 
     return Vm(
             1024,
