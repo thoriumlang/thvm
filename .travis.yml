@@ -31,7 +31,9 @@ matrix:
       env:
         - CC=gcc-8
         - CXX=g++-8
-        - CXXFLAGS='-Wall'
+        - GCOV=gcov-8
+        - CXXFLAGS='-g -O0 -Wall -fprofile-arcs -ftest-coverage'
+        - CMAKE_BUILD_TYPE="Debug"
         - SONAR=true
         - DOCKER=false
       addons:
@@ -64,16 +66,18 @@ script:
         -e CC="$CC" \
         -e CXX="$CXX" \
         -e CXXFLAGS="$CXXFLAGS" \
+        -e CMAKE_BUILD_TYPE="$CMAKE_BUILD_TYPE" \
         -e SONAR="$SONAR" \
         cpollet/cpp
     elif [ "$SONAR" = "true" ]; then
-      cmake ..
+      cmake -DCMAKE_BUILD_TYPE="$CMAKE_BUILD_TYPE" ..
       build-wrapper-linux-x86-64 --out-dir bw-output make clean all test
     else
-      cmake ..
+      cmake -DCMAKE_BUILD_TYPE="$CMAKE_BUILD_TYPE" ..
       make clean all test
     fi
   - |
     if [ "$SONAR" = "true" ]; then
+      find src/main/CMakeFiles/thvmcore.dir -name "*.gcda" -exec $GCOV -b {} 2&>/dev/null \;
       sonar-scanner -X -Dsonar.verbose=true -Dproject.settings=sonar.properties
     fi
